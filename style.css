@@ -249,6 +249,7 @@ a:hover {
     text-align: center;
     vertical-align: top;
     width: 215px;
+    background-color: #00000000;
 }
 
 .MovieCard  .Poster {

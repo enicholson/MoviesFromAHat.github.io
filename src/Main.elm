@@ -42,6 +42,7 @@ type alias Model =
     { unwatched : List Movie
     , watched : List Movie
     , selectedMovie : MovieSelection
+    , focusedMovie : MovieSelection
     , genres : Set Genre
     , selectedGenres : Set Genre
     , genresMultiselect : Multiselect.Model
@@ -86,6 +87,7 @@ init location =
                         Date.compare (watchDate m1) (watchDate m2)
                     )
         , selectedMovie = NotSelected
+        , focusedMovie = NotSelected
         , genres = genres
         , selectedGenres = queryGenres
         , genresMultiselect = Genre.multiSelectModel genres queryGenres
@@ -101,6 +103,7 @@ init location =
 type Msg
     = SelectMovie
     | MovieSelected ( Maybe Movie, List Movie )
+    | FocusMovie (Maybe Movie)
     | MultiselectEvent Multiselect.Msg
     | LocationChange Navigation.Location
 
@@ -132,6 +135,22 @@ update msg model =
                 ( { model
                     | unwatched = remaining
                     , selectedMovie = selected
+                  }
+                , Cmd.none
+                )
+
+        FocusMovie selection ->
+            let
+                selected =
+                    case selection of
+                        Just movie ->
+                            Selected movie
+
+                        Nothing ->
+                            NothingToSelect
+            in
+                ( { model
+                    | focusedMovie = selected
                   }
                 , Cmd.none
                 )
@@ -184,12 +203,12 @@ view model =
                 [ h2 [] [ text "Unwatched Films" ]
                 , div [ class [ Movies ] ]
                     (model.unwatched
-                        |> List.map (Movie.movieCard model.selectedGenres)
+                        |> List.map (Movie.movieCard FocusMovie model.selectedGenres)
                     )
                 , h2 [] [ text "Watched" ]
                 , div [ class [ Movies ] ]
                     (model.watched
-                        |> List.map (Movie.movieCard model.selectedGenres)
+                        |> List.map (Movie.movieCard FocusMovie model.selectedGenres)
                     )
                 ]
             , rulesView
@@ -229,7 +248,7 @@ selectionView model =
     div [ class [ Selection ] ]
         [ case model.selectedMovie of
             Selected movie ->
-                Movie.movieCard Set.empty movie
+                Movie.movieCard FocusMovie Set.empty movie
 
             NotSelected ->
                 text ""

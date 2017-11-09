@@ -27281,7 +27281,8 @@ var _user$project$AppCss$colors = {
 	blue: _rtfeldman$elm_css$Css$hex('20457C'),
 	orange: _rtfeldman$elm_css$Css$hex('FB6648'),
 	other: _rtfeldman$elm_css$Css$hex('5E3448'),
-	black: _rtfeldman$elm_css$Css$hex('000000')
+	black: _rtfeldman$elm_css$Css$hex('000000'),
+	transparent: _rtfeldman$elm_css$Css$hex('00000000')
 };
 var _user$project$AppCss$general = {
 	ctor: '::',
@@ -27555,49 +27556,53 @@ var _user$project$AppCss$movieCard = A2(
 								_rtfeldman$elm_css$Css$px(215)),
 							_1: {
 								ctor: '::',
-								_0: _rtfeldman$elm_css$Css$descendants(
-									{
-										ctor: '::',
-										_0: A2(
-											_rtfeldman$elm_css$Css$class,
-											_user$project$AppCss$Poster,
-											{
-												ctor: '::',
-												_0: _rtfeldman$elm_css$Css$maxWidth(
-													_rtfeldman$elm_css$Css$pct(100)),
-												_1: {
-													ctor: '::',
-													_0: _rtfeldman$elm_css$Css$width(
-														_rtfeldman$elm_css$Css$pct(100)),
-													_1: {ctor: '[]'}
-												}
-											}),
-										_1: {
+								_0: _rtfeldman$elm_css$Css$backgroundColor(_user$project$AppCss$colors.transparent),
+								_1: {
+									ctor: '::',
+									_0: _rtfeldman$elm_css$Css$descendants(
+										{
 											ctor: '::',
 											_0: A2(
 												_rtfeldman$elm_css$Css$class,
-												_user$project$AppCss$Title,
+												_user$project$AppCss$Poster,
 												{
 													ctor: '::',
-													_0: _rtfeldman$elm_css$Css$margin(_user$project$AppCss$spacing.small),
-													_1: {ctor: '[]'}
+													_0: _rtfeldman$elm_css$Css$maxWidth(
+														_rtfeldman$elm_css$Css$pct(100)),
+													_1: {
+														ctor: '::',
+														_0: _rtfeldman$elm_css$Css$width(
+															_rtfeldman$elm_css$Css$pct(100)),
+														_1: {ctor: '[]'}
+													}
 												}),
 											_1: {
 												ctor: '::',
 												_0: A2(
 													_rtfeldman$elm_css$Css$class,
-													_user$project$AppCss$Notes,
+													_user$project$AppCss$Title,
 													{
 														ctor: '::',
-														_0: _rtfeldman$elm_css$Css$fontSize(
-															_rtfeldman$elm_css$Css$rem(0.9)),
+														_0: _rtfeldman$elm_css$Css$margin(_user$project$AppCss$spacing.small),
 														_1: {ctor: '[]'}
 													}),
-												_1: {ctor: '[]'}
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_rtfeldman$elm_css$Css$class,
+														_user$project$AppCss$Notes,
+														{
+															ctor: '::',
+															_0: _rtfeldman$elm_css$Css$fontSize(
+																_rtfeldman$elm_css$Css$rem(0.9)),
+															_1: {ctor: '[]'}
+														}),
+													_1: {ctor: '[]'}
+												}
 											}
-										}
-									}),
-								_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}
 							}
 						}
 					}
@@ -27797,8 +27802,8 @@ var _user$project$Movie$notesView = function (movie) {
 			});
 	}
 };
-var _user$project$Movie$movieCard = F2(
-	function (selectedGenres, movie) {
+var _user$project$Movie$movieCard = F3(
+	function (focusMovie, selectedGenres, movie) {
 		var filtered = function () {
 			var _p2 = _elm_lang$core$Set$size(selectedGenres);
 			if (_p2 === 0) {
@@ -27811,7 +27816,7 @@ var _user$project$Movie$movieCard = F2(
 			}
 		}();
 		return A2(
-			_elm_lang$html$Html$a,
+			_elm_lang$html$Html$button,
 			{
 				ctor: '::',
 				_0: _user$project$AppCss_Helpers$classList(
@@ -27830,10 +27835,12 @@ var _user$project$Movie$movieCard = F2(
 					}),
 				_1: {
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$href(movie.url),
+					_0: _elm_lang$html$Html_Events$onClick(
+						focusMovie(
+							_elm_lang$core$Maybe$Just(movie))),
 					_1: {
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$target('_blank'),
+						_0: _elm_lang$html$Html_Attributes$type_('button'),
 						_1: {ctor: '[]'}
 					}
 				}
@@ -30636,35 +30643,6 @@ var _user$project$MovieList$movies = A2(
 		}
 	});
 
-var _user$project$Main$selectionView = function (model) {
-	return A2(
-		_elm_lang$html$Html$div,
-		{
-			ctor: '::',
-			_0: _user$project$AppCss_Helpers$class(
-				{
-					ctor: '::',
-					_0: _user$project$AppCss$Selection,
-					_1: {ctor: '[]'}
-				}),
-			_1: {ctor: '[]'}
-		},
-		{
-			ctor: '::',
-			_0: function () {
-				var _p0 = model.selectedMovie;
-				switch (_p0.ctor) {
-					case 'Selected':
-						return A2(_user$project$Movie$movieCard, _elm_lang$core$Set$empty, _p0._0);
-					case 'NotSelected':
-						return _elm_lang$html$Html$text('');
-					default:
-						return _elm_lang$html$Html$text('Sorry, it looks like the hat is empty.');
-				}
-			}(),
-			_1: {ctor: '[]'}
-		});
-};
 var _user$project$Main$rulesView = A2(
 	_elm_lang$html$Html$div,
 	{ctor: '[]'},
@@ -30698,9 +30676,9 @@ var _user$project$Main$rulesView = A2(
 			}
 		}
 	});
-var _user$project$Main$Model = F7(
-	function (a, b, c, d, e, f, g) {
-		return {unwatched: a, watched: b, selectedMovie: c, genres: d, selectedGenres: e, genresMultiselect: f, location: g};
+var _user$project$Main$Model = F8(
+	function (a, b, c, d, e, f, g, h) {
+		return {unwatched: a, watched: b, selectedMovie: c, focusedMovie: d, genres: e, selectedGenres: f, genresMultiselect: g, location: h};
 	});
 var _user$project$Main$NothingToSelect = {ctor: 'NothingToSelect'};
 var _user$project$Main$Selected = function (a) {
@@ -30738,8 +30716,8 @@ var _user$project$Main$init = function (location) {
 				},
 				A2(
 					_elm_lang$core$List$filter,
-					function (_p1) {
-						return !_user$project$Movie$isWatched(_p1);
+					function (_p0) {
+						return !_user$project$Movie$isWatched(_p0);
 					},
 					_user$project$MovieList$movies)),
 			watched: A2(
@@ -30753,6 +30731,7 @@ var _user$project$Main$init = function (location) {
 					}),
 				A2(_elm_lang$core$List$filter, _user$project$Movie$isWatched, _user$project$MovieList$movies)),
 			selectedMovie: _user$project$Main$NotSelected,
+			focusedMovie: _user$project$Main$NotSelected,
 			genres: genres,
 			selectedGenres: queryGenres,
 			genresMultiselect: A2(_user$project$Genre$multiSelectModel, genres, queryGenres),
@@ -30771,6 +30750,38 @@ var _user$project$Main$subscriptions = function (model) {
 		_elm_lang$core$Platform_Sub$map,
 		_user$project$Main$MultiselectEvent,
 		_inkuzmin$elm_multiselect$Multiselect$subscriptions(model.genresMultiselect));
+};
+var _user$project$Main$FocusMovie = function (a) {
+	return {ctor: 'FocusMovie', _0: a};
+};
+var _user$project$Main$selectionView = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _user$project$AppCss_Helpers$class(
+				{
+					ctor: '::',
+					_0: _user$project$AppCss$Selection,
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: function () {
+				var _p1 = model.selectedMovie;
+				switch (_p1.ctor) {
+					case 'Selected':
+						return A3(_user$project$Movie$movieCard, _user$project$Main$FocusMovie, _elm_lang$core$Set$empty, _p1._0);
+					case 'NotSelected':
+						return _elm_lang$html$Html$text('');
+					default:
+						return _elm_lang$html$Html$text('Sorry, it looks like the hat is empty.');
+				}
+			}(),
+			_1: {ctor: '[]'}
+		});
 };
 var _user$project$Main$MovieSelected = function (a) {
 	return {ctor: 'MovieSelected', _0: a};
@@ -30810,14 +30821,30 @@ var _user$project$Main$update = F2(
 						{unwatched: _p2._0._1, selectedMovie: selected}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
+			case 'FocusMovie':
+				var selected = function () {
+					var _p4 = _p2._0;
+					if (_p4.ctor === 'Just') {
+						return _user$project$Main$Selected(_p4._0);
+					} else {
+						return _user$project$Main$NothingToSelect;
+					}
+				}();
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{focusedMovie: selected}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 			default:
-				var _p4 = A2(_inkuzmin$elm_multiselect$Multiselect$update, _p2._0, model.genresMultiselect);
-				var subModel = _p4._0;
-				var subCmd = _p4._1;
+				var _p5 = A2(_inkuzmin$elm_multiselect$Multiselect$update, _p2._0, model.genresMultiselect);
+				var subModel = _p5._0;
+				var subCmd = _p5._1;
 				var selectedGenres = _elm_lang$core$Set$fromList(subModel.selected);
 				var newUrl = function () {
-					var _p5 = _elm_lang$core$List$length(subModel.selected);
-					if (_p5 === 0) {
+					var _p6 = _elm_lang$core$List$length(subModel.selected);
+					if (_p6 === 0) {
 						return model.location.origin;
 					} else {
 						return A2(
@@ -30831,9 +30858,9 @@ var _user$project$Main$update = F2(
 								'+',
 								A2(
 									_elm_lang$core$List$map,
-									function (_p6) {
-										var _p7 = _p6;
-										return _p7._0;
+									function (_p7) {
+										var _p8 = _p7;
+										return _p8._0;
 									},
 									subModel.selected)));
 					}
@@ -31014,7 +31041,7 @@ var _user$project$Main$view = function (model) {
 									},
 									A2(
 										_elm_lang$core$List$map,
-										_user$project$Movie$movieCard(model.selectedGenres),
+										A2(_user$project$Movie$movieCard, _user$project$Main$FocusMovie, model.selectedGenres),
 										model.unwatched)),
 								_1: {
 									ctor: '::',
@@ -31042,7 +31069,7 @@ var _user$project$Main$view = function (model) {
 											},
 											A2(
 												_elm_lang$core$List$map,
-												_user$project$Movie$movieCard(model.selectedGenres),
+												A2(_user$project$Movie$movieCard, _user$project$Main$FocusMovie, model.selectedGenres),
 												model.watched)),
 										_1: {ctor: '[]'}
 									}
@@ -31066,7 +31093,7 @@ var _user$project$Main$main = A2(
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
 if (typeof _user$project$Main$main !== 'undefined') {
-    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Time.Date.Date":{"args":[],"tags":{"Date":["{ year : Int, month : Int, day : Int }"]}},"Dom.Error":{"args":[],"tags":{"NotFound":["String"]}},"Movie.WatchState":{"args":[],"tags":{"Watched":["Time.Date.Date"],"Unwatched":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Set.Set":{"args":["t"],"tags":{"Set_elm_builtin":["Dict.Dict t ()"]}},"Main.Msg":{"args":[],"tags":{"MultiselectEvent":["Multiselect.Msg"],"SelectMovie":[],"LocationChange":["Navigation.Location"],"MovieSelected":["( Maybe.Maybe Movie.Movie, List Movie.Movie )"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Multiselect.Msg":{"args":[],"tags":{"ClearInput":[],"OnHover":["( String, String )"],"Toggle":[],"FocusResult":["Result.Result Dom.Error ()"],"Adjust":["Float"],"Start":[],"ClickOnComponent":[],"RemoveItem":["( String, String )"],"Clear":[],"OnSelect":["( String, String )"],"ScrollY":["Result.Result Dom.Error Float"],"ScrollResult":["Result.Result Dom.Error ()"],"DisableProtection":[],"Shortcut":["Int"],"Filter":["String"],"Click":["Mouse.Position"]}}},"aliases":{"Genre.Genre":{"args":[],"type":"( String, String )"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Movie.Movie":{"args":[],"type":"{ title : String , url : String , img : String , year : Int , runtime : Int , genres : Set.Set Genre.Genre , watched : Movie.WatchState }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Main.Msg"},"versions":{"elm":"0.18.0"}});
+    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Time.Date.Date":{"args":[],"tags":{"Date":["{ year : Int, month : Int, day : Int }"]}},"Dom.Error":{"args":[],"tags":{"NotFound":["String"]}},"Movie.WatchState":{"args":[],"tags":{"Watched":["Time.Date.Date"],"Unwatched":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Set.Set":{"args":["t"],"tags":{"Set_elm_builtin":["Dict.Dict t ()"]}},"Main.Msg":{"args":[],"tags":{"MultiselectEvent":["Multiselect.Msg"],"SelectMovie":[],"FocusMovie":["Maybe.Maybe Movie.Movie"],"LocationChange":["Navigation.Location"],"MovieSelected":["( Maybe.Maybe Movie.Movie, List Movie.Movie )"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Multiselect.Msg":{"args":[],"tags":{"ClearInput":[],"OnHover":["( String, String )"],"Toggle":[],"FocusResult":["Result.Result Dom.Error ()"],"Adjust":["Float"],"Start":[],"ClickOnComponent":[],"RemoveItem":["( String, String )"],"Clear":[],"OnSelect":["( String, String )"],"ScrollY":["Result.Result Dom.Error Float"],"ScrollResult":["Result.Result Dom.Error ()"],"DisableProtection":[],"Shortcut":["Int"],"Filter":["String"],"Click":["Mouse.Position"]}}},"aliases":{"Genre.Genre":{"args":[],"type":"( String, String )"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Movie.Movie":{"args":[],"type":"{ title : String , url : String , img : String , year : Int , runtime : Int , genres : Set.Set Genre.Genre , watched : Movie.WatchState }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Main.Msg"},"versions":{"elm":"0.18.0"}});
 }
 
 if (typeof define === "function" && define['amd'])

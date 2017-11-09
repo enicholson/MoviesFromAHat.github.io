@@ -1,7 +1,8 @@
 module Movie exposing (..)
 
-import Html exposing (Html, div, img, text, a)
-import Html.Attributes exposing (src, href, target)
+import Html exposing (Html, div, img, text, a, button)
+import Html.Attributes exposing (src, href, target, type_)
+import Html.Events exposing (onClick)
 import AppCss.Helpers exposing (class, classList)
 import AppCss as Style
 import Time.Date exposing (Date, day, month, year)
@@ -66,8 +67,8 @@ matchGenres genres movie =
 -- Views
 
 
-movieCard : Set Genre -> Movie -> Html msg
-movieCard selectedGenres movie =
+movieCard : (Maybe Movie -> msg) -> Set Genre -> Movie -> Html msg
+movieCard focusMovie selectedGenres movie =
     let
         filtered =
             case Set.size selectedGenres of
@@ -77,14 +78,14 @@ movieCard selectedGenres movie =
                 _ ->
                     Set.size (Set.intersect movie.genres selectedGenres) == 0
     in
-        a
+        button
             [ classList
                 [ ( Style.MovieCard, True )
                 , ( Style.Filterable, True )
                 , ( Style.Filtered, filtered )
                 ]
-            , href movie.url
-            , target "_blank"
+            , Just movie |> focusMovie |> onClick
+            , type_ "button"
             ]
             [ img
                 [ class [ Style.Poster ]

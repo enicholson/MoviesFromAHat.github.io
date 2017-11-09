@@ -30,6 +30,7 @@ colors =
     , orange = (hex "FB6648")
     , other = (hex "5E3448")
     , black = (hex "000000")
+    , transparent = (hex "00000000")
     }
 
 
@@ -106,6 +107,7 @@ movieCard =
         , textAlign center
         , verticalAlign top
         , width (px 215)
+        , backgroundColor colors.transparent
         , descendants
             [ class Poster
                 [ maxWidth (pct 100)
